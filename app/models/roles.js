@@ -1,4 +1,6 @@
 'use strict';
+const { Sequelize } = require('sequelize');
+
 const {
   Model
 } = require('sequelize');
@@ -14,8 +16,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Roles.init({
-    name: DataTypes.STRING,
-    description: DataTypes.STRING
+    name:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    description:{
+      type: DataTypes.STRING,
+      allowNull:true,
+    },
+    createdAt:{
+      type:DataTypes.DATE,
+      defaultValue: Sequelize.fn('NOW'),
+    }
   }, {
     sequelize,
     modelName: 'Roles',

@@ -1,4 +1,5 @@
 'use strict';
+const { Sequelize } = require('sequelize');
 const {
   Model
 } = require('sequelize');
@@ -14,11 +15,77 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    mobile: DataTypes.STRING,
-    status: DataTypes.ENUM
+    name:{
+      type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+        notEmpty:{msg:"Name cannot be empty"},
+    },      
+    },
+    email:{
+      type: DataTypes.STRING,
+      unique:{
+        args: true,
+        msg :"Email is already in use."
+    },
+    allowNull: false,
+    validate:{
+      isEmail:{
+          msg :"Please enter a valid Email Id",
+      },
+      notEmpty:{msg:"Email cannot be empty"},
+  },    
+    },
+    password:{
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        isStrongPassword(value) {
+            if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;.?~\\/-]).{5,15}/.test(value)) {
+              throw new Error("Password must have 1 lowercase, 1 uppercase, 1 special character, and be 5-10 characters long.");
+            }
+            if(/<[^>]*>/.test(value)){
+              throw new Error("warning your Password should not contains HTML tags");
+            }
+        },
+        notEmpty:{msg: "Password cannot be empty"},
+    },       
+    },
+    mobile:{
+      type: DataTypes.STRING,
+      allowNull:false,
+      unique: {
+        args:true,
+        msg:"User with this mobile number already exists" 
+    },      
+    validate:{
+      len:{
+        args:[10,10],
+        msg:"Mobile Number must be of length 10"
+      },
+      notEmpty:{msg: "Contact cannot be empty"},      
+    }    
+    },
+    status:{
+      type: DataTypes.TINYINT,
+      defaultValue:1,
+      validate:{
+        isIn: {
+          args: [[1, 2]],
+          msg: "Must be either 1 for `active` or  2 for `inactive`",
+        },// Enforces the value
+
+      }      
+    },
+    deletedAt:{
+      type: DataTypes.DATE,
+      defaultValue:null,
+    },
+    createdAt:{
+      type:DataTypes.DATE,
+      defaultValue:Sequelize.fn('NOW'),
+    }
+
   }, {
     sequelize,
     modelName: 'User',
