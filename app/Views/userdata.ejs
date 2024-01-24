@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>index</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link class="js-stylesheet" href="css/light.css" rel="stylesheet" />
+    <script src="js/settings.js"></script>
+    <style>
+      body {
+        opacity: 0;
+      }
+      footer{
+        margin-top: 170px;
+      }
+      main{
+        margin-top: 5vh;
+      }
+    </style>
+    <!-- END SETTINGS -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-120946860-10"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-120946860-10", { anonymize_ip: true });
+    </script>
+  </head>
+  <body
+    data-theme="default"
+    data-layout="fluid"
+    data-sidebar-position="left"
+    data-sidebar-layout="default"
+  >
+    <div class="wrapper">
+      <%- include('layouts/sidebar') %>
+      <div class="main">
+        <!-- rendering header -->
+        <header><%- include('layouts/header') %></header>
+
+        <!-- //rendering main -->
+        <main><%- include("layouts/userTable") %></main>
+
+        <!-- rendering footer -->
+        <footer><%- include("layouts/footer") %></footer>
+      </div>
+    </div>
+  </body>
+</html>
