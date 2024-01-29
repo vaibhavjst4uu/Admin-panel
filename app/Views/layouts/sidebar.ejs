@@ -82,32 +82,24 @@
 
         <ul class="sidebar-nav">
           <li class="sidebar-header">Pages</li>
-          <li class="sidebar-item active">
-            <a
-              data-bs-target="#dashboards"
-              data-bs-toggle="collapse"
-              class="sidebar-link"
+          <a class="sidebar-link" href="../index">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-user align-middle"
             >
-              <i class="align-middle" data-feather="sliders"></i>
-              <span class="align-middle">Dashboards</span>
-            </a>
-            <ul
-              id="dashboards"
-              class="sidebar-dropdown list-unstyled collapse show"
-              data-bs-parent="#sidebar"
-            >
-              <!-- <li class="sidebar-item active"><a class="sidebar-link" href="index-2.html">Analytics</a></li> -->
-              <li class="sidebar-item">
-                <a class="sidebar-link" href="../index"
-                  >E-Commerce
-                  <span class="sidebar-badge badge bg-primary">Pro</span></a
-                >
-              </li>
-              <!-- <li class="sidebar-item"><a class="sidebar-link" href="dashboard-crypto.html">Crypto <span -->
-              <!-- class="sidebar-badge badge bg-primary">Pro</span></a></li> -->
-            </ul>
-          </li>
-
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span class="align-middle">DashBoard</span>
+          </a>
 
           <!-- writing the User management part next part -->
 
@@ -125,16 +117,28 @@
               class="sidebar-dropdown list-unstyled collapse show"
               data-bs-parent="#sidebar"
             >
-              <li class="sidebar-item active"><a class="sidebar-link" href="../userdata">Users</a></li>
+              <li class="sidebar-item active">
+                <a class="sidebar-link" href="../userdata">Users</a>
+              </li>
               <li class="sidebar-item">
                 <a class="sidebar-link" href="../roledata"
                   >Roles
                   <span class="sidebar-badge badge bg-primary">Pro</span></a
                 >
               </li>
-              <li class="sidebar-item"><a class="sidebar-link" href="../permissiondata">Permission <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+              <li class="sidebar-item">
+                <a class="sidebar-link" href="../permissiondata"
+                  >Permission
+                  <span class="sidebar-badge badge bg-primary">Pro</span></a
+                >
+              </li>
 
-              <li class="sidebar-item"><a class="sidebar-link" href="#">Role has Permission <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+              <li class="sidebar-item">
+                <a class="sidebar-link" href="#"
+                  >Role has Permission
+                  <span class="sidebar-badge badge bg-primary">Pro</span></a
+                >
+              </li>
             </ul>
           </li>
 
@@ -154,21 +158,30 @@
               class="sidebar-dropdown list-unstyled collapse show"
               data-bs-parent="#sidebar"
             >
-              <li class="sidebar-item active"><a class="sidebar-link" href="#">Items</a></li>
+              <li class="sidebar-item active">
+                <a class="sidebar-link" href="#">Items</a>
+              </li>
               <li class="sidebar-item">
                 <a class="sidebar-link" href="#"
                   >Brands
                   <span class="sidebar-badge badge bg-primary">Pro</span></a
                 >
               </li>
-              <li class="sidebar-item"><a class="sidebar-link" href="#">Categories <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+              <li class="sidebar-item">
+                <a class="sidebar-link" href="#"
+                  >Categories
+                  <span class="sidebar-badge badge bg-primary">Pro</span></a
+                >
+              </li>
 
-              <li class="sidebar-item"><a class="sidebar-link" href="#">tags <span class="sidebar-badge badge bg-primary">Pro</span></a></li>
+              <li class="sidebar-item">
+                <a class="sidebar-link" href="#"
+                  >tags
+                  <span class="sidebar-badge badge bg-primary">Pro</span></a
+                >
+              </li>
             </ul>
-
-          </li>          
-          
-          
+          </li>
         </ul>
       </div>
     </nav>

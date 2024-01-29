@@ -1,5 +1,5 @@
 'use strict';
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require("sequelize");
 
 const {
   Model
@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+
+    // get createdAtValue() {
+    //   // Return only the date part of createdAt
+    //   return this.getDataValue('createdAt') ? this.getDataValue('createdAt').toISOString().split('T')[0] : null;
+    // }
   }
   Roles.init({
     name:{
@@ -25,8 +30,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:true,
     },
     createdAt:{
-      type:DataTypes.DATE,
-      defaultValue: Sequelize.fn('NOW'),
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.fn("NOW"),
+      // get() {
+      //   // Custom getter for createdAt
+      //   return this.createdAtValue;
+      // },
     }
   }, {
     sequelize,

@@ -19437,17 +19437,15 @@
                       })),
                       e.forEach(function (e, o) {
                         var a = e.length === n.globals.dataPoints,
-                          s = t.graphics
-                            .group()
-                            .attr({
-                              class: "apexcharts-series",
-                              "data:longestSeries": a,
-                              seriesName: y.escapeString(
-                                n.globals.seriesNames[o]
-                              ),
-                              rel: o + 1,
-                              "data:realIndex": o,
-                            });
+                          s = t.graphics.group().attr({
+                            class: "apexcharts-series",
+                            "data:longestSeries": a,
+                            seriesName: y.escapeString(
+                              n.globals.seriesNames[o]
+                            ),
+                            rel: o + 1,
+                            "data:realIndex": o,
+                          });
                         (t.dataRadiusOfPercent[o] = []),
                           (t.dataRadius[o] = []),
                           (t.angleArr[o] = []),
@@ -24423,15 +24421,13 @@
               })),
               n.extend(n.Defs, {
                 pattern: function (e, t, i) {
-                  return this.put(new n.Pattern())
-                    .update(i)
-                    .attr({
-                      x: 0,
-                      y: 0,
-                      width: e,
-                      height: t,
-                      patternUnits: "userSpaceOnUse",
-                    });
+                  return this.put(new n.Pattern()).update(i).attr({
+                    x: 0,
+                    y: 0,
+                    width: e,
+                    height: t,
+                    patternUnits: "userSpaceOnUse",
+                  });
                 },
               }),
               (n.Shape = n.invent({

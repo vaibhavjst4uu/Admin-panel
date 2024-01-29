@@ -12902,7 +12902,7 @@ body[data-sidebar-position="right"] {
 }
 @media (min-width: 1200px) {
   .settings {
-    display: block;
+    display: hidden;
   }
 }
 .settings-panel {
