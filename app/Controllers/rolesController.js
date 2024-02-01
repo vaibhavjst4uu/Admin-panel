@@ -1,4 +1,5 @@
 const db = require("../models/index");
+const { Op } = require('sequelize');
 
 let roles = db.Roles;
 let role_has_permission = db.role_has_permission;
@@ -103,23 +104,55 @@ const Alldata = async (req, res) => {
 const savePermission = async (req, res) => {
   try {
     const { role, permission } = req.body;
-    let data = [];
-    console.log(typeof(permission));
+
+    await role_has_permission.sync({ alter: true });
 
     if(typeof(permission)=== "string"){
-      let RolePermission = await role_has_permission.create({
-        roleId: role,
-        permissionId: parseInt(permission),
+      let RolePermission = await role_has_permission.findOrCreate({
+        where:{
+          roleId: role,
+          permissionId: parseInt(permission),
+        },
+        defaults:{
+          roleId : role,
+          permissionId : parseInt(permission),
+        }
+      });
+      // console.log(RolePermission);
+
+      let del = await  role_has_permission.destroy({
+        where:{
+          roleId: role,
+          permissionId:{
+            [Op.not]:parseInt(RolePermission[0].permissionId)
+          }
+        }
       });
 
-    }else{
+    }else{     
       permission.forEach((per) => {
-        data.push({
-          roleId: role,
-          permissionId: per,
-        });
+        let RolePermission = async(role,per)=>{
+         return await role_has_permission.findOrCreate({
+            where:{
+              roleId: role,
+              permissionId: per,
+            },
+            defaults:{
+              roleId : role,
+              permissionId : per,
+            }
+          })
+        }
+         RolePermission(role,per);
     });
-    let RolePermission = await role_has_permission.bulkCreate(data);
+    let del = await  role_has_permission.destroy({
+      where:{
+        roleId:role,
+        permissionId:{
+          [Op.notIn]:permission,
+        }
+      }
+    });
     }
 
     res.redirect("/role/role_has_permissions");
@@ -127,6 +160,9 @@ const savePermission = async (req, res) => {
     res.json(error);
   }
 };
+
+
+
 
 
 

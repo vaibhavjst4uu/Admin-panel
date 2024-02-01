@@ -25,11 +25,11 @@ module.exports = {
       }
     });
         // Add unique constraint for the combination of roleId and permissionId
-        await queryInterface.addConstraint('role_has_permissions', {
-          type: 'unique',
-          fields: ['roleId', 'permissionId'],
-          name: 'uniqueRolePermission',
-        });
+        // await queryInterface.addConstraint('role_has_permissions', {
+        //   type: 'unique',
+        //   fields: ['roleId', 'permissionId'],
+        //   name: 'uniqueRolePermission',
+        // });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('role_has_permissions');

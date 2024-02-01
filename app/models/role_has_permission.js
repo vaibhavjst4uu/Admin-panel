@@ -17,12 +17,12 @@ module.exports = (sequelize, DataTypes) => {
     roleId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: 'uniqueRolePermission', // Set the same unique constraint name
+      // unique: 'uniqueRolePermission', // Set the same unique constraint name
     },
     permissionId: {
       type: DataTypes.INTEGER,
       allowNull:false,
-      unique:'uniqueRolePermission'// Specify the unique constraint name
+      // unique:'uniqueRolePermission'// Specify the unique constraint name
     }
   }, {
     sequelize,
