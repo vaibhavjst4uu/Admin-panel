@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      body {
+        background-color: #f5f7fb;
+      }
+      .newRole {
+        margin-left: 16px;
+        margin-top: 10px;
+        margin-right: 40px;
+        margin-bottom: 20px;
+      }
+      .newRole {
+        /* background-color: inherit; */
+        padding: 10px;
+        border-radius: 5px;
+        /* border: none; */
+      }
+
+      /* Customize the focus outline for the select box */
+      select:focus {
+        outline: none; /* Set your preferred color */
+      }
+
+      .btn {
+        float: right;
+        margin-right: 14px;
+      }
+      .SAP{
+        margin: 10px 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="#" method="post">
+      <select class="newRole col-md-4" name="role" id="role">
+        <option value="#">Select Role</option>
+        <!-- <option value="admin">Administrator</option>
+        <option value="user">User</option>
+        <option value="superAdmin">Super Admin</option>
+        <option value="agent">Agent</option> -->
+        <% roleData.forEach((role)=>{ %>
+        <option value="<%= role.id %>"><%= role.name %></option>
+
+        <% });%>
+      </select>
+      <div class="SAP">
+        <input type="checkbox" class="SAllPermission"/>
+        <label for="SAllPermission"> Select All</label>
+      </div>
+
+
+
+
+      <!-- main body -->
+
+      <div class="row card mx-3">
+        <div class="card-body row col-md-12 d-flex">
+          <!-- <div class="permissionCard col-md-4 ">
+            <input type="checkbox" class="selectAll" name="selectAll" id="selectAll" />
+            <label ><h3>User</h3></label>
+            <div class="px-2">
+              <input type="checkbox" class="individualCheckbox" name="read" id="read" />
+              <label for="read"><h5>Read</h5></label><br>
+              <input type="checkbox" class="individualCheckbox" name="create" id="create" />
+              <label for="create"><h5>Create</h5></label><br>
+              <input type="checkbox" class="individualCheckbox" name="update" id="update" />
+              <label for="update"><h5>Update</h5></label><br>
+              <input type="checkbox" class="individualCheckbox" name="delete" id="delete" value="delete" />
+              <label for="selectAll"><h5>Delete</h5></label>
+            </div>
+          </div> -->
+
+          <% uniqueModuleObjects.forEach((uniqueModuleObject) => { %>
+          <div class="permissionCard col-md-4">
+            <input
+              type="checkbox"
+              class="selectAll  <%= uniqueModuleObject.Module_name %>"
+              name="selectAll"
+              id="selectAll"
+            />
+            <label
+              ><b><h4><%= uniqueModuleObject.Module_name %></h4></b></label
+            >
+            <div class="px-3">
+              <% permisionSet.forEach((permission) => { %> <% if
+              (uniqueModuleObject.Module_name === permission.name.split(" ")[0])
+              { %> <input type="checkbox" class="individualCheckbox" name="permission" id="<%= permission.id %>" value="<%= permission.id %>" />
+              <label for="<%= permission.id %>">
+                <h5><%= permission.name.split(" ")[1] %></h5> </label
+              ><br />
+              <% } %> <% }) %>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary col-md-2">
+        update Permissions
+      </button>
+    </form>
+
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Event listener for 'SAllPermission' checkbox
+        var selectAllPermissionCheckbox = document.querySelector(".SAllPermission");
+        selectAllPermissionCheckbox.addEventListener("change", function () {
+          var individualCheckboxes = document.querySelectorAll(".individualCheckbox");
+    
+          individualCheckboxes.forEach(function (checkbox) {
+            checkbox.checked = selectAllPermissionCheckbox.checked;
+          });
+    
+          // Check all 'Select All' checkboxes if 'SAllPermission' checkbox is checked
+          var selectAllCheckboxes = document.querySelectorAll(".selectAll");
+          selectAllCheckboxes.forEach(function (selectAllCheckbox) {
+            selectAllCheckbox.checked = selectAllPermissionCheckbox.checked;
+          });
+        });
+    
+        // Event listeners for 'Select All' checkboxes
+        var selectAllCheckboxes = document.querySelectorAll(".selectAll");
+        selectAllCheckboxes.forEach(function (selectAllCheckbox) {
+          selectAllCheckbox.addEventListener("change", function () {
+            var parentContainer = selectAllCheckbox.closest(".permissionCard");
+            var individualCheckboxes = parentContainer.querySelectorAll(".individualCheckbox");
+    
+            individualCheckboxes.forEach(function (checkbox) {
+              checkbox.checked = selectAllCheckbox.checked;
+            });
+    
+            // Check 'SAllPermission' checkbox if all 'Select All' checkboxes are checked
+            var allSelectAllChecked = Array.from(selectAllCheckboxes).every(function (checkbox) {
+              return checkbox.checked;
+            });
+    
+            selectAllPermissionCheckbox.checked = allSelectAllChecked;
+          });
+        });
+    
+        // Event listeners for individual checkboxes
+        var permissionCards = document.querySelectorAll(".permissionCard");
+        permissionCards.forEach(function (parentContainer) {
+          var individualCheckboxes = parentContainer.querySelectorAll(".individualCheckbox");
+          individualCheckboxes.forEach(function (checkbox) {
+            checkbox.addEventListener("change", function () {
+              var selectAllCheckbox = parentContainer.querySelector(".selectAll");
+    
+              // Check parent 'selectAll' checkbox if all individual checkboxes are checked
+              var allIndividualChecked = Array.from(individualCheckboxes).every(function (checkbox) {
+                return checkbox.checked;
+              });
+    
+              selectAllCheckbox.checked = allIndividualChecked;
+    
+              // Check 'SAllPermission' checkbox if all 'Select All' checkboxes are checked
+              var allSelectAllChecked = Array.from(selectAllCheckboxes).every(function (checkbox) {
+                return checkbox.checked;
+              });
+    
+              selectAllPermissionCheckbox.checked = allSelectAllChecked;
+            });
+          });
+        });
+      });
+    </script>
+
+  </body>
+</html>

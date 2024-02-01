@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       name: DataTypes.STRING,
       slug: DataTypes.STRING,
+      Module_name:{
+        type:DataTypes.STRING,
+        allowNull: true,
+       
+      },
       createdAt: {
         type: DataTypes.DATE,
         defaultValue: Sequelize.fn("NOW"),

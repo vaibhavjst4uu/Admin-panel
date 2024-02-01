@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>index</title>
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;display=swap"
       rel="stylesheet"
@@ -33,26 +34,27 @@
       gtag("js", new Date());
 
       gtag("config", "UA-120946860-10", { anonymize_ip: true });
-    </script>
-  </head>
-  <body
-    data-theme="default"
-    data-layout="fluid"
-    data-sidebar-position="left"
-    data-sidebar-layout="default"
-  >
-    <div class="wrapper">
-      <%- include('layouts/sidebar') %>
-      <div class="main">
-        <!-- rendering header -->
-        <header><%- include('layouts/header') %></header>
+    </script>    
+</head>
+<body
+data-theme="default"
+data-layout="fluid"
+data-sidebar-position="left"
+data-sidebar-layout="default"
+>
+<div class="wrapper">
+    <%- include('layouts/sidebar') %>
+    <div class="main">
+      <!-- rendering header -->
+      <header><%- include('layouts/header') %></header>
 
-        <!-- //rendering main -->
-        <main><%- include("layouts/roleTable") %></main>
+      <!-- //rendering main -->
+      <main><%- include("layouts/roleHasPermissionTable") %></main>
 
-        <!-- rendering footer -->
-        <footer><%- include("layouts/footer") %></footer>
-      </div>
+      <!-- rendering footer -->
+      <footer><%- include("layouts/footer") %></footer>
     </div>
-  </body>
+  </div>
+    
+</body>
 </html>

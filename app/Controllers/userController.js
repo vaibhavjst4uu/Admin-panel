@@ -7,7 +7,7 @@ const addUser = async (req, res) => {
   console.log(req.body);
   try {
     let user = await User.create(reqBody);
-    res.redirect("/userdata");
+    res.redirect("/user/data");
 
   } catch (e) {
     res.status(400).json(e.errors);
@@ -22,7 +22,7 @@ try {
     where: { id: id },
   });
 
-  res.redirect("/userdata");
+  res.redirect("/user/data");
 } catch (e) {
   res.status(400).json(e.errors);
 
@@ -53,7 +53,7 @@ const deleteUser = async (req, res) => {
     },
   });
 
-  res.redirect("/userdata");
+  res.redirect("/user/data");
 };
 
 module.exports = {

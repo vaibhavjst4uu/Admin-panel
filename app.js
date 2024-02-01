@@ -13,6 +13,11 @@ app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use("/", indexRouter);
 
+// app.get("/roleHasPermission", (req,res)=>{
+//   res.render("roleHasPermissionData");
+//   // layouts/roleHasPermissionTable
+// })
+
 // app.get("/", (req,res)=>{
 //     console.log(path.join(__dirname,"app/Views"))
 //     res.send("hello I am working");
@@ -45,7 +50,7 @@ app.use("/", indexRouter);
 // })
 
 // app.get("/permissiondata", (req,res)=>{
-//     res.render("permissiondata");
+//     res.render("layouts/roleHasPermissionTable");
 // })
 
 app.listen(port, () => {

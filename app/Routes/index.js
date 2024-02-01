@@ -9,8 +9,8 @@ router.get("/index", (req, res) => {
   res.render("index");
 });
 
-router.use("/", permissionRoute);
-router.use("/", userRoute);
-router.use("/", roleRoute);
+router.use("/permission", permissionRoute);
+router.use("/user", userRoute);
+router.use("/role", roleRoute);
 
 module.exports = router;
