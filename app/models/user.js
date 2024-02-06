@@ -12,6 +12,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // User.hasOne(
+      //   models.User_has_role,
+      //   {
+      //     foreignKey: "userId",
+      //     onDelete:"CASCADE"
+      //   }
+      // );
     }
 
     // get createdAtValue() {
@@ -23,9 +30,9 @@ module.exports = (sequelize, DataTypes) => {
     name:{
       type:DataTypes.STRING,
       allowNull:false,
-      validate:{
-        notEmpty:{msg:"Name cannot be empty"},
-    },      
+    //   validate:{
+    //     notEmpty:{msg:"Name cannot be empty"},
+    // },      
     },
     email:{
       type: DataTypes.STRING,

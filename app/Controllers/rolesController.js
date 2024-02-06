@@ -1,5 +1,7 @@
 const db = require("../models/index");
-const { Op } = require('sequelize');
+const { Op } = require("sequelize");
+const { Swal } = require('sweetalert2');
+
 
 let roles = db.Roles;
 let role_has_permission = db.role_has_permission;
@@ -45,6 +47,7 @@ const deleteRole = async (req, res) => {
 
 const updateRole = async (req, res) => {
   try {
+
     let id = Number(req.params.id);
 
     let role = await roles.update(req.body, {
@@ -73,7 +76,7 @@ const Alldata = async (req, res) => {
     // console.log(uniqueModuleObjects);
 
     let permisionSet = await permissions.findAll({
-      attributes: ["id", "name"], // Include the column you want to retrieve
+      attributes: ["id", "name"], // Include the column we want to retrieve
       raw: true, // Ensure the result is plain JSON objects
       nest: true, // Nesting the results to get a clean JSON
       distinct: true, // Use the DISTINCT keyword
@@ -100,59 +103,57 @@ const Alldata = async (req, res) => {
   }
 };
 
-
 const savePermission = async (req, res) => {
   try {
     const { role, permission } = req.body;
 
     await role_has_permission.sync({ alter: true });
 
-    if(typeof(permission)=== "string"){
+    if (typeof permission === "string") {
       let RolePermission = await role_has_permission.findOrCreate({
-        where:{
+        where: {
           roleId: role,
           permissionId: parseInt(permission),
         },
-        defaults:{
-          roleId : role,
-          permissionId : parseInt(permission),
-        }
+        defaults: {
+          roleId: role,
+          permissionId: parseInt(permission),
+        },
       });
       // console.log(RolePermission);
 
-      let del = await  role_has_permission.destroy({
-        where:{
+      let del = await role_has_permission.destroy({
+        where: {
           roleId: role,
-          permissionId:{
-            [Op.not]:parseInt(RolePermission[0].permissionId)
-          }
-        }
+          permissionId: {
+            [Op.not]: parseInt(RolePermission[0].permissionId),
+          },
+        },
       });
-
-    }else{     
+    } else {
       permission.forEach((per) => {
-        let RolePermission = async(role,per)=>{
-         return await role_has_permission.findOrCreate({
-            where:{
+        let RolePermission = async (role, per) => {
+          return await role_has_permission.findOrCreate({
+            where: {
               roleId: role,
               permissionId: per,
             },
-            defaults:{
-              roleId : role,
-              permissionId : per,
-            }
-          })
-        }
-         RolePermission(role,per);
-    });
-    let del = await  role_has_permission.destroy({
-      where:{
-        roleId:role,
-        permissionId:{
-          [Op.notIn]:permission,
-        }
-      }
-    });
+            defaults: {
+              roleId: role,
+              permissionId: per,
+            },
+          });
+        };
+        RolePermission(role, per);
+      });
+      let del = await role_has_permission.destroy({
+        where: {
+          roleId: role,
+          permissionId: {
+            [Op.notIn]: permission,
+          },
+        },
+      });
     }
 
     res.redirect("/role/role_has_permissions");
@@ -161,10 +162,21 @@ const savePermission = async (req, res) => {
   }
 };
 
-
-
-
-
+let roleSpecificPermission = async (req, res) => {
+  try {
+    const roleId = Number(req.params.id);
+    let data = await role_has_permission.findAll({
+      where: {
+        roleId: roleId,
+      },
+      attributes: ["permissionId"],
+    });
+    res.status(200).json(data);
+  } catch (e) {
+    console.log("Error in getting specific permissions for a role", e);
+    res.status(400).json(e);
+  }
+};
 
 module.exports = {
   addRole,
@@ -173,4 +185,5 @@ module.exports = {
   updateRole,
   Alldata,
   savePermission,
+  roleSpecificPermission,
 };

@@ -68,6 +68,7 @@ const deletePermission = async (req, res) => {
 const updatePermission = async(req,res)=>{
   try {
     let id = Number(req.params.id);
+    console.log(req.body);
     let permission = await permissions.update(req.body, {
       where: { id: id },
     });

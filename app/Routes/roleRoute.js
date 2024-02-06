@@ -16,6 +16,7 @@ router.post("/create", roleCtrl.addRole);
 
 router.get("/role_has_permissions", roleCtrl.Alldata);
 router.post("/role_has_permissions", roleCtrl.savePermission);
+router.get("/roleSpecificPermission/:id", roleCtrl.roleSpecificPermission);
 
 
 module.exports = router;

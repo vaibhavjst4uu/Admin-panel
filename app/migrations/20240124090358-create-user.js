@@ -15,10 +15,7 @@ module.exports = {
       },
       email: {
         type: Sequelize.STRING,
-        unique:{
-          args: true,
-          msg :"Email is already in use."
-      },  //email should be unique for every user
+        unique:true, //email should be unique for every user
         allowNull:false
       },
       password: {
@@ -28,10 +25,7 @@ module.exports = {
       mobile: {
         type: Sequelize.STRING,
         allowNull:false,
-        unique: {
-          args:true,
-          msg:"User with this mobile number already exists" 
-      },
+        unique: true
       },
       status: {
         type: Sequelize.TINYINT,

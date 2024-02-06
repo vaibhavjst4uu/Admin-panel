@@ -12,7 +12,10 @@ router.post("/create", userCtrl.addUser);
 router.patch('/update/:id', userCtrl.updateUser);
 
 
+// routes for user_has_role
 
+router.get("/userSpecificRole/:id", userCtrl.userSpecificRole);
+router.post("/assignRole", userCtrl.assignRole);
 
 
 module.exports = router;

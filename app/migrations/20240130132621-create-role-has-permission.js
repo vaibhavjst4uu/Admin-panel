@@ -3,33 +3,52 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('role_has_permissions', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
+
       roleId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references:{
+          model:'Roles',// The name of the referenced table
+          key:'id', //The name of the referenced column
+        },
+        onDelete: 'CASCADE', // Specify the desired onDelete behavior
+        onUpdate: 'CASCADE'
       },
       permissionId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull:false,
+        references:{
+          model:'Permissions',
+          key:'id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: "CASCADE"
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: true,
-        type: Sequelize.DATE
-      }
+
     });
-        // Add unique constraint for the combination of roleId and permissionId
+
+        // // Add the foreign key constraint
         // await queryInterface.addConstraint('role_has_permissions', {
-        //   type: 'unique',
-        //   fields: ['roleId', 'permissionId'],
-        //   name: 'uniqueRolePermission',
+        //   fields: ['roleId'],
+        //   type: 'foreign key',
+        //   name: 'fk_role_has_permission_role', // Provide a unique constraint name
+        //   references: {
+        //     table: 'Roles',
+        //     field: 'id',
+        //   },
+        //   onDelete: 'CASCADE', // Specify the desired onDelete behavior
         // });
+
+        // await queryInterface.addConstraint('role_has_permissions',{
+        //   fields:['permissionId'],
+        //   type: 'foreign key',
+        //   name: 'fk_role_has_permission_permission',
+        //   references: {
+        //     table: 'Permissions',
+        //     field: 'id'
+        //   },
+        //   onDelete:'CASCADE',
+        // })
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('role_has_permissions');

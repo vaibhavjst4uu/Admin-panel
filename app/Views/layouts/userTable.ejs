@@ -10,6 +10,7 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
+
     <style>
       .newRole {
         float: right;
@@ -31,18 +32,26 @@
       .Abtn:hover {
         cursor: pointer;
       }
+      .dot:hover {
+        cursor: pointer;
+      }
     </style>
+
   </head>
   <body>
-    <h2 class="float-start ml-3"> Users List</h2>
+    <div>xsxvsh<%= errorRes %> hsavcacjc</div>
+
+    
+
+    <h2 class="float-start ml-3">Users List</h2>
 
     <a
       href="#"
       class="btn btn-primary float-end mt-n1 button newRole"
       data-toggle="modal"
       data-target=".bd-example-modal-lg"
-      ><i class="fas fa-plus"></i> </a
-    >
+      ><i class="fas fa-plus"></i>
+    </a>
     <table class="table table-hover mytable">
       <thead>
         <tr>
@@ -56,75 +65,117 @@
         </tr>
       </thead>
       <tbody>
+
         <% users.forEach((user)=>{ %>
         <tr>
           <th scope="row"><%= user.id %></th>
           <td><%= user.name %></td>
           <td><%= user.email %></td>
           <td><%= user.mobile %></td>
-          <td><%= user.status %></td>
+          <td><%= user.status === 1 ? 'active' : 'inactive' %></td>
           <td><%= user.createdAt.toLocaleDateString() %></td>
           <td class="action">
-            <div class="mb-2 ml-3 w-30">
-              <button
-                class="Abtn edit-button"
-                data-toggle="modal"
-                data-target=".bd-example-modal-lg"
-                data-user='<%- JSON.stringify(user) %>'
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-edit align-middle me-2"
-                >
-                  <path
-                    d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                  ></path>
-                  <path
-                    d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                  ></path>
-                </svg>
-                <span class="align-middle">edit</span>
-              </button>
-            </div>
 
-            <div class="mb-2 mr-0 w-30">
-              <button class="Abtn delete-button">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-delete align-middle me-2"
-                >
-                  <path
-                    d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"
-                  ></path>
-                  <line x1="18" y1="9" x2="12" y2="15"></line>
-                  <line x1="12" y1="9" x2="18" y2="15"></line>
-                </svg>
-                <span class="align-middle">delete</span>
-              </button>
-              <form
-                class="delete-form"
-                method="post"
-                action="/user/delete/<%= user.id %>?_method=DELETE"
+            <div class="dropdown subActions">
+              <svg
+                class="dropdown-toggle dot"
+                data-bs-toggle="dropdown"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-more-vertical align-middle me-2"
               >
-                <!-- Hidden input to include the user ID in the form data -->
-                <input type="hidden" name="_method" value="delete" />
-              </form>
+                <circle cx="12" cy="12" r="1"></circle>
+                <circle cx="12" cy="5" r="1"></circle>
+                <circle cx="12" cy="19" r="1"></circle>
+              </svg>
+
+
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                  <div class="mb-2 ml-3 w-30">
+                    <button
+                      class="Abtn edit-button"
+                      data-toggle="modal"
+                      data-target=".bd-example-modal-lg"
+                      data-user='<%-  JSON.stringify(user || {}) %>'
+                    >
+
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-edit align-middle me-2"
+                      >
+                        <path
+                          d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                        ></path>
+                        <path
+                          d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                        ></path>
+                      </svg>
+                      <span class="align-middle">edit</span>
+                    </button>
+                  </div>
+                </li>
+                <li>
+                  <div class="mb-2 ml-3 w-30">
+                    <button class="Abtn delete-button" >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-delete align-middle me-2"
+                      >
+                        <path
+                          d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"
+                        ></path>
+                        <line x1="18" y1="9" x2="12" y2="15"></line>
+                        <line x1="12" y1="9" x2="18" y2="15"></line>
+                      </svg>
+                      <span class="align-middle">delete</span>
+                    </button>
+                    <form
+                      class="delete-form"
+                      method="post"
+                      action="/user/delete/<%= user.id %>?_method=DELETE"
+                    >
+                      <input type="hidden" name="_method" value="delete" />
+                    </form>
+                  </div>
+                </li>
+                <li>
+                  <div class="mb-2 ml-3 w-30">
+                    <button
+                      class="Abtn assign-role-button"
+                      data-toggle="modal"
+                      data-target="#exampleModa"
+                      data-user='<%-  JSON.stringify(user || {}) %>'
+                    >
+                      <i class="align-middle me-2 fas fa-fw fa-user-check"></i>
+                      <span class="align-middle">Assign Role</span>
+                    </button>
+                  </div>
+                </li>
+              </ul>
             </div>
           </td>
         </tr>
@@ -132,7 +183,7 @@
       </tbody>
     </table>
 
-<!-- modal for edit and Add user -->
+    <!-- modal for edit and Add user -->
     <div
       class="modal fade bd-example-modal-lg"
       tabindex="-1"
@@ -144,6 +195,12 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <!-- form created here -->
+          <div class="modal-header">
+            <h5 class="modal-title" id="createUserTitle">Create User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
           <form class="m-3" id="userForm" method="post" action="/user/create">
             <div class="form-row">
               <div class="form-group col-md-6">
@@ -154,6 +211,7 @@
                   name="name"
                   id="name"
                   placeholder="Enter your full name"
+                  required
                 />
               </div>
               <div class="form-group col-md-6">
@@ -164,6 +222,7 @@
                   name="email"
                   id="email"
                   placeholder="jhon@gmail.com"
+                  required
                 />
               </div>
             </div>
@@ -177,11 +236,17 @@
                   name="mobile"
                   id="mobile"
                   placeholder="mobile number"
+                  required
                 />
               </div>
               <div class="form-group col-md-6">
                 <label for="status">Status</label>
-                <select id="status" name="status"  class="form-control h-50">
+                <select
+                  id="status"
+                  name="status"
+                  class="form-control h-50"
+                  required
+                >
                   <option value="1" selected>Active</option>
                   <option value="2">Inactive</option>
                 </select>
@@ -197,9 +262,9 @@
                   name="password"
                   id="password"
                   placeholder="Password"
+                  required
                 />
               </div>
-
             </div>
 
             <div class="float-end">
@@ -210,7 +275,7 @@
               >
                 Close
               </button>
-              <button type="submit" class="btn btn-primary">
+              <button type="button" class="btn btn-primary" onclick="submitForm()">
                 <b>Save Details</b>
               </button>
             </div>
@@ -219,45 +284,165 @@
       </div>
     </div>
 
+    <!-- modal for Assign role to user -->
+    <div
+      class="modal fade"
+      id="exampleModa"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Assign Role To User
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="/user/assignRole" method="post" id="assignRoleForm">
+              <div class="form-group">
+                <label for="role" class="col-form-label">Roles:</label>
+                <select class="form-control" name="roleId" id="role">
+                  <% if(!roles){ %>
+                    <option value="#">Select Role</option>
+                   <% }else{ %> 
+                    <option value="#">Select Role</option>
+                  <% roles.forEach((role)=>{ %>
+                    <option value=<%= role.id %>> <%= role.name %></option>
+                  <% }); %>  
+                  <% } %>
+                </select>
+                <!-- Hidden input field to store the user.id -->
+                <input
+                  type="hidden"
+                  name="userId"
+                  id="assignRoleUserId"
+                  value=""
+                />
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  Save Details
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- scripts started here -->
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <% if (errorRes[0] === 'true') { %>
+      <script>
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 2500
+        });
+      </script>
+    <% } else if (errorRes[0] === 'false') { %>
+      <script>
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error: Your work could not be saved",
+          showConfirmButton: false,
+          timer: 2500
+        });
+      </script>
+    <% } %>
+    
     <script>
-  // Function to set user data in the form
-  function setUserData(user) {
-    const form = document.getElementById('userForm');
-    const nameInput = form.querySelector('#name');
-    const emailInput = form.querySelector('#email');
-    const mobileInput = form.querySelector('#mobile');
-    const statusSelect = form.querySelector('#status');
-    const passwordInput = form.querySelector('#password');
+      // Function to set user data in the form
+      function setUserData(user) {
+        const form = document.getElementById("userForm");
+        const nameInput = form.querySelector("#name");
+        const emailInput = form.querySelector("#email");
+        const mobileInput = form.querySelector("#mobile");
+        const statusSelect = form.querySelector("#status");
+        const passwordInput = form.querySelector("#password");
+        const title = document.getElementById("createUserTitle");
+
+        // Set values in the form
+        nameInput.value = user.name || "";
+        emailInput.value = user.email || "";
+        mobileInput.value = user.mobile || "";
+        statusSelect.value = user.status || "1";
+        passwordInput.value = user.password || "";
+        title.innerText = "Update User"
+      }
+
+      // Event listener for edit buttons
+      document.querySelectorAll(".edit-button").forEach(function (button) {
+        button.addEventListener("click", function () {
+          // Get the user data from the data-user attribute
+          const userData = JSON.parse(this.getAttribute("data-user"));
+          console.log(userData);
+          setUserData(userData);
+
+          // Set the form action for editing
+          const form = document.getElementById("userForm");
+          form.action = `/user/update/${userData.id}?_method=PATCH`;
+
+          // Show the modal
+        });
+      });
+
+      //for setting assigned role
+
+      document.querySelectorAll(".assign-role-button").forEach(async function (button){
+        button.addEventListener('click', async function(){
+          let userData = JSON.parse(this.getAttribute("data-user"));
+          
+            let response = await fetch(`/user/userSpecificRole/${userData.id}`);
+            let data = await response.json();
+
+            const roleSelect = document.getElementById("role");
+                roleSelect.value = data.roleId ? data.roleId : '#';
+
+      // Update the value of the hidden input field
+             const assignRoleUserId = document.getElementById("assignRoleUserId");
+             assignRoleUserId.value = userData.id;
+            
+            
+        
+         
+          console.log(data.roleId);
+          const form = document.getElementById("assignRoleForm");
+          
+        })
+      })
 
 
-    // Set values in the form
-    nameInput.value = user.name || '';
-    emailInput.value = user.email || '';
-    mobileInput.value = user.mobile || '';
-    statusSelect.value = user.status || '1';
-    passwordInput.value = user.password || '';
-  }
 
-    // Event listener for edit buttons
-    document.querySelectorAll('.edit-button').forEach(function(button) {
-    button.addEventListener('click', function() {
-      // Get the user data from the data-user attribute
-      const userData = JSON.parse(this.getAttribute('data-user'));
-      console.log(userData);
-      setUserData(userData);
+      function submitForm(){
+            document.getElementById("userForm").submit();
+        }
+      
 
-      // Set the form action for editing
-      const form = document.getElementById('userForm');
-      form.action = `/user/update/${userData.id}?_method=PATCH`;
-
-      // Show the modal
-  
-    });
-  });
     </script>
+
     <script>
       const deleteForms = document.querySelectorAll(".delete-form");
       const deleteButtons = document.querySelectorAll(".delete-button");
@@ -283,8 +468,23 @@
               setTimeout(() => {
                 deleteForms[index].submit();
               }, 1000);
-              
             }
+          });
+        });
+      });
+    </script>
+    <script>
+      //for assigning roleID in hidden input when add new user or edit user
+
+      document.addEventListener('DOMContentLoaded', function () {
+        // Listen for the Assign Role button click
+        document.querySelectorAll('.assign-role-button').forEach(function (button) {
+          button.addEventListener('click', function () {
+            // Get the userId from the data-userid attribute
+            var userId = button.getAttribute('data-userid');
+            
+            // Set the userId in the hidden input field in the Assign Role modal
+            document.getElementById('assignRoleUserId').value = userId;
           });
         });
       });

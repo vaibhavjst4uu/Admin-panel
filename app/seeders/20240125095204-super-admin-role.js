@@ -13,7 +13,7 @@ module.exports = {
      * }], {});
     */
     await queryInterface.bulkInsert('Roles', [{
-      name: 'superAdmin',
+      name: 'Super Admin',
       description:'I have all the access',      
     }], {});
   },

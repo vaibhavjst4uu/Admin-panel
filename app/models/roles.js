@@ -13,6 +13,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // Roles.hasMany(
+      //   models.role_has_permission,
+      //   {
+      //   foreignKey:"roleId",
+      //   onDelete: 'CASCADE'
+      //   }
+      // );
     }
 
     // get createdAtValue() {

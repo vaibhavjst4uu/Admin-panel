@@ -7,6 +7,7 @@ module.exports = {
     await queryInterface.addColumn('Permissions', 'Module_name', {
       type: Sequelize.STRING,
       allowNull: true, // Adjust this based on your requirements
+      unique:true,
       
       set(value) {
         // Convert the input value to uppercase

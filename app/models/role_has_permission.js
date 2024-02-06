@@ -11,6 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // models.role_has_permission.belongsTo(
+      //   models.Roles,
+      //   {
+      //     foreignKey:'roleId',
+      //     onDelete:  "CASCADE",
+      //     onUpdate: "CASCADE"
+      //   }
+      // );
+    
     }
   }
   role_has_permission.init({
