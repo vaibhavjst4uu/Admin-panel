@@ -36,10 +36,10 @@ const updateUser = async (req, res) => {
     let user = await Users.update(req.body, {
       where: { id: id },
     });
-    req.flash('message', 'Success!!');
+    req.flash('error', 'update');
     res.redirect("/user/data");
   } catch (e) {
-    req.flash('error', 'Error!!');
+    req.flash('error', 'notUpdate');
     res.redirect("/user/data");
   }
 };
@@ -111,10 +111,14 @@ const assignRole = async (req, res) => {
         },
       },
     });
-
+    req.flash('error', 'roleAssigned');
     res.redirect("/user/data");
   } catch (error) {
     console.error(error);
+    req.flash('error', 'roleNotAssigned');
+
+    res.redirect("/user/data");
+
   }
 };
 

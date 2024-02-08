@@ -39,7 +39,7 @@
 
   </head>
   <body>
-    <div>xsxvsh<%= errorRes %> hsavcacjc</div>
+    <!-- <div>xsxvsh<%= errorRes %> hsavcacjc</div> -->
 
     
 
@@ -351,28 +351,50 @@
     <!-- scripts started here -->
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <% if (errorRes[0] === 'true') { %>
-      <script>
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Your work has been saved",
-          showConfirmButton: false,
-          timer: 2500
-        });
-      </script>
-    <% } else if (errorRes[0] === 'false') { %>
-      <script>
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Error: Your work could not be saved",
-          showConfirmButton: false,
-          timer: 2500
-        });
-      </script>
-    <% } %>
+
     
+  <%
+    function showSwal(icon, title) {
+  %>
+      <script>
+        Swal.fire({
+          position: "top-end",
+          icon: "<%= icon %>",
+          title: "<%= title %>",
+          showConfirmButton: false,
+          timer: 2500
+        });
+      </script>
+  <%
+    }
+  %>
+  
+  <%
+    switch (errorRes[0]) {
+      case 'true':
+        showSwal('success', 'New User added successfully');
+        break;
+      case 'false':
+        showSwal('error', 'Error: unable to add new user');
+        break;
+      case 'update':
+        showSwal('success', 'User updated successfully');
+        break;
+      case 'notUpdate':
+        showSwal('error', 'Error: unable to update User');
+        break;
+      case 'roleAssigned':
+        showSwal('success', 'Role Assigned Successfully!');
+        break;
+      case 'roleNotAssigned':
+        showSwal('error', 'Error: unable to Assign new role User');
+        break;
+    }
+  %>
+  
+
+
+
     <script>
       // Function to set user data in the form
       function setUserData(user) {
@@ -438,7 +460,7 @@
 
       function submitForm(){
             document.getElementById("userForm").submit();
-        }
+      }
       
 
     </script>

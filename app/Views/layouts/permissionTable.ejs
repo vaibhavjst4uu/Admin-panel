@@ -40,7 +40,7 @@
       class="btn btn-primary float-end mt-n1 button newRole"
       data-toggle="modal"
       data-target="#exampleModa"
-      ><i class="fas fa-plus"></i> New Permission</a
+      ><i class="fas fa-plus"></i> </a
     >
     <table class="table table-hover mytable">
       <thead>
@@ -249,6 +249,47 @@
         });
       });
     </script>
+
+    <!-- SweetAlert2 for add and update -->
+  <%
+    function showSwal(icon, title) {
+  %>
+      <script>
+        Swal.fire({
+          position: "top-end",
+          icon: "<%= icon %>",
+          title: "<%= title %>",
+          showConfirmButton: false,
+          timer: 2500
+        });
+      </script>
+  <%
+    }
+  %>
+  
+  <%
+    switch (errorRes[0]) {
+      case 'true':
+        showSwal('success', 'New permissions added successfully');
+        break;
+      case 'false':
+        showSwal('error', 'Error: unable to add new permissions');
+        break;
+      case 'update':
+        showSwal('success', 'Permission updated successfully');
+        break;
+      case 'notUpdate':
+        showSwal('error', 'Error: unable to update Permission');
+        break;
+
+    }
+  %>
+ 
+    
+
+
+
+
 
     <script src="/js/app.js"></script>
     <script

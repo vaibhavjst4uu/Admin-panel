@@ -1,6 +1,5 @@
 const db = require("../models/index");
 const { Op } = require("sequelize");
-const { Swal } = require('sweetalert2');
 
 
 let roles = db.Roles;
@@ -9,12 +8,19 @@ let permissions = db.Permissions;
 
 const addRole = async (req, res) => {
   const { ...reqBody } = req.body;
-  // console.log(req.body);
+  console.log(req.body);
   try {
-    let user = await roles.create(reqBody);
+    if(reqBody.name !== ''){
+      let user = await roles.create(reqBody);
+    }else{
+      throw new Error ('Please fill out all fields');
+    }
+    req.flash('error', "true");
     res.redirect("/role/data");
   } catch (e) {
-    res.status(400).json(e.errors);
+    req.flash('error', "false");
+    res.redirect("/role/data");
+    console.log(e);
   }
 };
 
@@ -23,7 +29,8 @@ const findAlll = async (req, res) => {
     let Roles = await roles.findAll();
     // console.log("role is here"+Roles);
     if (!Roles) throw new Error("No Role Found!");
-    res.render("roledata", { Roles });
+    const errorRes = req.flash('error');
+    res.render("roledata", { Roles, errorRes });
   } catch (err) {
     console.log(err);
     return res.status(500).json({
@@ -49,13 +56,19 @@ const updateRole = async (req, res) => {
   try {
 
     let id = Number(req.params.id);
+    if(req.body.name === ''){
+      throw new Error ('Please fill out all fields');
+    }else{
+      let role = await roles.update(req.body, {
+        where: { id: id },
+      });
+    }
 
-    let role = await roles.update(req.body, {
-      where: { id: id },
-    });
-
+    req.flash('error', "update");
     res.redirect("/role/data");
   } catch (e) {
+    req.flash('error', "notUpdate");
+    res.redirect("/role/data");
     res.status(400).json(e.errors);
   }
 };
@@ -70,6 +83,7 @@ const Alldata = async (req, res) => {
       nest: true, // Nesting the results to get a clean JSON
       distinct: true, // Use the DISTINCT keyword
     });
+
     let uniqueModuleObjects = [
       ...new Set(permissionData.map((item) => JSON.stringify(item))),
     ].map(JSON.parse);
@@ -89,16 +103,19 @@ const Alldata = async (req, res) => {
       throw new Error("No role or permission data found!");
     }
     // console.log(permissionData);
+    const errorRes = req.flash('error');
     res.render("roleHasPermissionData", {
       permisionSet,
       roleData,
       uniqueModuleObjects,
+      errorRes,
     });
   } catch (err) {
-    // console.log(err);
+    console.log(err);
     return res.status(500).json({
       status: "error",
       message: "Error Occured!",
+      
     });
   }
 };
@@ -155,10 +172,12 @@ const savePermission = async (req, res) => {
         },
       });
     }
-
+    req.flash('error', "permissionAssigned");
     res.redirect("/role/role_has_permissions");
   } catch (error) {
-    res.json(error);
+    req.flash('error', "permissionNotAssigned");
+    res.redirect("/role/role_has_permissions");
+    console.log(error);
   }
 };
 

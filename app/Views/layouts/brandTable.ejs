@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>user table</title>
+    <title>Brand table</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style>
-        .newRole{
+        .newBrand{
             float:right;
             margin-right: 4vw;
             margin-bottom: 2vh;
@@ -30,28 +30,30 @@
     </style>
 </head>
 <body>
-    <h2 class="float-start ml-4">Roles</h2>
-    <a href="#" class="btn btn-primary float-end mt-n1 button newRole" data-toggle="modal" data-target="#exampleModa"><i class="fas fa-plus"></i></a>
+    <h2 class="float-start ml-4">Brands</h2>
+    <a href="#" class="btn btn-primary float-end mt-n1 button newBrand" data-toggle="modal" data-target="#exampleModa"><i class="fas fa-plus"></i></a>
     <table class="table table-hover mytable">
         <thead>
           <tr>
             <th  scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Description</th>
+            <!-- <th scope="col">Created_By</th> -->
             <th scope="col">Action</th>          
           </tr>
         </thead>
         <tbody>
             
-        <% Roles.forEach((role)=>{ %>
+        <% Brands.forEach((brand)=>{ %>
           <tr>
-            <th scope="row"><%= role.id %></th>
-            <td><%= role.name %></td>
-            <td><%= role.description %></td>
+            <th scope="row"><%= brand.id %></th>
+            <td><%= brand.name %></td>
+            <td><%= brand.description %></td>
+            <!-- <td><%= brand.createdBy %></td> -->
             <td class="action">
                 <div class="mb-2 ml-3 w-30">
                     <button class="Abtn edit-button" data-toggle="modal" data-target="#exampleModa"
-                    data-role='<%- JSON.stringify(role) %>'>
+                    data-brand='<%- JSON.stringify(brand) %>'>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> <span class="align-middle">edit</span>                        
                     </button>
                 </div>
@@ -63,7 +65,7 @@
                     <form
                     class="delete-form"
                     method="post"
-                    action="/role/delete/<%= role.id %>?_method=DELETE"
+                    action="/brand/delete/<%= brand.id %>?_method=DELETE"
                   >
                     <!-- Hidden input to include the user ID in the form data -->
                     <input type="hidden" name="_method" value="delete" />
@@ -83,13 +85,13 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="createRoleTitle">Create New Role</h5>
+          <h5 class="modal-title" id="createRoleTitle">Create New Brand</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form action="/role/create" id="userForm" method="post">
+          <form action="/brand/create" id="brandForm" method="post">
             <div class="form-group">
               <label for="name" class="col-form-label">Name:</label>
               <input type="text" name="name" class="form-control" id="name">
@@ -112,8 +114,8 @@
 
   <script>
     // Function to set user data in the form
-    function setUserData(user) {
-      const form = document.getElementById('userForm');
+    function setUserData(brand) {
+      const form = document.getElementById('brandForm');
       const nameInput = form.querySelector('#name');
       const descriptionInput = form.querySelector('#description');
       const title = document.getElementById("createRoleTitle");
@@ -121,22 +123,22 @@
   
   
       // Set values in the form
-      nameInput.value = user.name || '';
-      descriptionInput.value = user.description || '';
-      title.innerText = "Update Role";
+      nameInput.value = brand.name || '';
+      descriptionInput.value = brand.description || '';
+      title.innerText = "Update Brand name";
     }
   
       // Event listener for edit buttons
       document.querySelectorAll('.edit-button').forEach(function(button) {
       button.addEventListener('click', function() {
         // Get the user data from the data-user attribute
-        const userData = JSON.parse(this.getAttribute('data-role'));
-        console.log(userData);
-        setUserData(userData);
+        const brandData = JSON.parse(this.getAttribute('data-brand'));
+        console.log(brandData);
+        setUserData(brandData);
   
         // Set the form action for editing
-        const form = document.getElementById('userForm');
-        form.action = `/role/update/${userData.id}?_method=PATCH`;
+        const form = document.getElementById('brandForm');
+        form.action = `/brand/update/${brandData.id}?_method=PATCH`;
   
         // Show the modal
     
@@ -200,16 +202,16 @@
     <%
       switch (errorRes[0]) {
         case 'true':
-          showSwal('success', 'New Role added successfully');
+          showSwal('success', 'New brand added successfully');
           break;
         case 'false':
-          showSwal('error', 'Error: unable to add new Role');
+          showSwal('error', 'Error: unable to add new Brand');
           break;
         case 'update':
-          showSwal('success', 'Role updated successfully');
+          showSwal('success', 'Brand name updated successfully');
           break;
         case 'notUpdate':
-          showSwal('error', 'Error: unable to update Role');
+          showSwal('error', 'Error: unable to update brand name');
           break;
       }
     %>
