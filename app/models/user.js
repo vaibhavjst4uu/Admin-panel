@@ -12,18 +12,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasOne(
-        models.user_has_role,
-        {
-          foreignKey: "userId",
-          onDelete:"CASCADE"
-        }
-      );
-      // this.belongsToMany(models.Roles, {
-      //   through: models.product_has_tags,
-      //   // foreignKey: 'productId',
-      //   // as:"productTags"
-      // });
+      // this.hasOne(
+      //   models.user_has_role,
+      //   {
+      //     foreignKey: "userId",
+      //     onDelete:"CASCADE"
+      //   }
+      // );
+
+      this.belongsToMany(models.Roles, {
+        through: models.user_has_role,
+        // foreignKey: 'UserId',
+        // as:"userRole"
+      });
     }
 
     // get createdAtValue() {

@@ -148,21 +148,40 @@ const signIn = async(req,res)=>{
       email:email,
       password:password
     },
-    include:[User_has_role]
+    include:[Roles]
   });
 
+  // console.log(Data);
+  // res.json(Data);
   if(Data.length === 0){
     res.json({error:"Invalid email or password"});
     return;
   }
   // res.json(Data.user_has_role[0]);
-  if(Data[0].user_has_role.userId === 1){
+  if(Data[0].Roles[0].name == "Admin"){
+    req.session.userId = Data[0].id;
+    req.session.name = Data[0].name;
+    req.session.isAdmin = true;
+    // console.log(req.session);
     res.redirect("/index");
   }else{
     res.json({error:`Sorry ${Data[0].name} only admin can login on this portal`});
   }
 
 }
+
+const logout = async(req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Logout error:', err);
+      res.status(500).json({ message: 'Failed to logout' });
+    } else {
+      // res.json(req.session.isAdmin);
+      console.log("Session destroyed!");
+      res.redirect("/");
+    }
+  });
+};
 module.exports = {
   addUser,
   findAll,
@@ -170,5 +189,6 @@ module.exports = {
   updateUser,
   assignRole,
   userSpecificRole,
-  signIn
+  signIn,
+  logout
 };

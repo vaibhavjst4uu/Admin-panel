@@ -7,17 +7,33 @@ const methodOverride = require("method-override");
 const indexRouter = require("./app/Routes/index");
 const session = require("express-session");
 const flash = require("connect-flash");
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+// const { sequelize } = require('./models'); // Assuming your Sequelize instance is named 'sequelize'
+const db = require('./app/models/index');
 
 
 
 
-app.use(
-  session({
-    secret: "qwertyuiop",
-    saveUninitialized: true,
-    resave: true,
-  })
-);
+// app.use(
+//   session({
+//     secret: "Vaibhav6898@",
+//     saveUninitialized: true,
+//     resave: true,
+//   })
+// );
+
+const sessionStore = new SequelizeStore({
+  db: db.sequelize,
+  expiration: 24 * 60 * 60 * 1000, // Session expiration time in milliseconds (optional)
+});
+
+app.use(session({
+  secret: 'qwertyuiop',
+  resave: false,
+  saveUninitialized: false,
+  store: sessionStore,
+}));
+sessionStore.sync();
 
 app.use(express.json({ limit: "500mb" })); //parses incoming requests with JSON payloads
 app.use(express.urlencoded({ extended: true }));
