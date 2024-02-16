@@ -66,6 +66,7 @@
                 data-toggle="modal"
                 data-target="#exampleModa"
                 data-permission='<%- JSON.stringify(permission) || {} %>'
+                
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -176,7 +177,7 @@
                 >
                   Close
                 </button>
-                <button type="/submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary">
                   Save Details
                 </button>
               </div>
@@ -256,7 +257,7 @@
   %>
       <script>
         Swal.fire({
-          position: "top-end",
+          position: "center",
           icon: "<%= icon %>",
           title: "<%= title %>",
           showConfirmButton: false,

@@ -6,7 +6,7 @@ let tags = db.Tags;
 
 const addTag = async (req,res)=>{
     const {...reqBody} = req.body;
-    console.log(req.body);
+
 
     try {
         if(reqBody.name !== ''){

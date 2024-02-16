@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // Many-to-Many with Products through product_has_tags
+        // this.belongsToMany(models.Products, {
+        //   through: models.product_has_tags,
+        //   foreignKey: 'tagId',
+        // });
     }
   }
   Tags.init({

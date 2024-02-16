@@ -58,8 +58,8 @@ const findAll = async (req, res) => {
     let users = await Users.findAll();
     if (!users) throw new Error("No Users Found!");
     const errorRes = req.flash('error');
-    console.log(errorRes);
-    console.log(errorRes[0]);
+    // console.log(errorRes);
+    // console.log(errorRes[0]);
     if (roles) {
       res.render("userdata", { users, roles , errorRes });
     } else {
@@ -140,11 +140,35 @@ try {
 }
 }
 
+
+const signIn = async(req,res)=>{
+  const { email, password } = req.body;
+  let Data =await Users.findAll({
+    where:{
+      email:email,
+      password:password
+    },
+    include:[User_has_role]
+  });
+
+  if(Data.length === 0){
+    res.json({error:"Invalid email or password"});
+    return;
+  }
+  // res.json(Data.user_has_role[0]);
+  if(Data[0].user_has_role.userId === 1){
+    res.redirect("/index");
+  }else{
+    res.json({error:`Sorry ${Data[0].name} only admin can login on this portal`});
+  }
+
+}
 module.exports = {
   addUser,
   findAll,
   deleteUser,
   updateUser,
   assignRole,
-  userSpecificRole
+  userSpecificRole,
+  signIn
 };

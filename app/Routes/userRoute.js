@@ -18,4 +18,7 @@ router.get("/userSpecificRole/:id", userCtrl.userSpecificRole);
 router.post("/assignRole", userCtrl.assignRole);
 
 
+// routes for SignIn
+
+router.post("/signIn", userCtrl.signIn);
 module.exports = router;

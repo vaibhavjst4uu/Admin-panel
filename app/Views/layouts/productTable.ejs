@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>user table</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    
+    <style>
+      .newRole {
+        float: right;
+        margin-right: 4vw;
+        margin-bottom: 2vh;
+      }
+      .action {
+        display: flex;
+        /* justify-content: center; */
+        justify-content: space-around;
+      }
+      .mytable {
+        text-align: center;
+      }
+      .Abtn {
+        border: none;
+        background-color: inherit;
+      }
+      .Abtn:hover {
+        cursor: pointer;
+      }
+      .dot:hover {
+        cursor: pointer;
+      }
+    </style>
+
+
+
+  </head>
+  <body>
+
+    
+
+    <h2 class="float-start ml-3">Product List</h2>
+
+    <a
+      href="#"
+      class="btn btn-primary float-end mt-n1 button newRole"
+      data-toggle="modal"
+      data-target=".bd-example-modal-lg"
+      ><i class="fas fa-plus"></i>
+    </a>
+    <table class="table table-hover mytable">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Brand</th>
+          <th scope="col">Category</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Description</th>
+          <th scope="col">Image</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+       <tbody>
+
+        <% data.forEach((product)=>{ %>
+        <tr>
+          <th scope="row"><%= product.id %></th>
+          <td><%= product.name  %></td>
+          <td>
+            <%= brands.find(brand => brand.id === product.brandId).name %>
+        </td>
+        <td>
+            <%= categories.find(category => category.id === product.categoryId).name %>
+        </td>
+          <td><%= product.product_prices[0].price %></td>
+          <td><%= product.product_quantity.quantity %></td>
+          <td><%= product.description %></td>
+          <td><%= product.product_images[0].mediaId %></td>
+          <td class="action">
+
+            <div class="dropdown subActions">
+              <svg
+                class="dropdown-toggle dot"
+                data-bs-toggle="dropdown"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-more-vertical align-middle me-2"
+              >
+                <circle cx="12" cy="12" r="1"></circle>
+                <circle cx="12" cy="5" r="1"></circle>
+                <circle cx="12" cy="19" r="1"></circle>
+              </svg>
+
+
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                  <div class="mb-2 ml-3 w-30">
+                    <button
+                      class="Abtn edit-button"
+                      data-toggle="modal"
+                      data-target=".bd-example-modal-lg"
+                      data-product='<%- JSON.stringify(product) || {} %>'
+                      
+
+                    >
+
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-edit align-middle me-2"
+                      >
+                        <path
+                          d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                        ></path>
+                        <path
+                          d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                        ></path>
+                      </svg>
+                      <span class="align-middle">edit</span>
+                    </button>
+                  </div>
+                </li>
+                <li>
+                  <div class="mb-2 ml-3 w-30">
+                    <button class="Abtn delete-button" >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-delete align-middle me-2"
+                      >
+                        <path
+                          d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"
+                        ></path>
+                        <line x1="18" y1="9" x2="12" y2="15"></line>
+                        <line x1="12" y1="9" x2="18" y2="15"></line>
+                      </svg>
+                      <span class="align-middle">delete</span>
+                    </button>
+                    <form
+                      class="delete-form"
+                      method="post"
+                      action="/product/delete/<%= product.id %>?_method=DELETE"
+                    >
+                      <input type="hidden" name="_method" value="delete" />
+                    </form>
+                  </div>
+                </li>
+                <!-- <li>
+                  <div class="mb-2 ml-3 w-30">
+                    <button
+                      class="Abtn assign-role-button"
+                      data-toggle="modal"
+                      data-target="#exampleModa"
+                      data-user='hello'
+                    >
+                      <i class="align-middle me-2 fas fa-fw fa-user-check"></i>
+                      <span class="align-middle">Assign Role</span>
+                    </button>
+                  </div>
+                </li> -->
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody> 
+    </table>
+
+    <!-- modal for edit and Add user -->
+    <div
+      class="modal fade bd-example-modal-lg"
+      tabindex="-1"
+      role="dialog"
+      id="editUserModal"
+      aria-labelledby="myLargeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+           <!-- form created here  -->
+          <div class="modal-header">
+            <h5 class="modal-title" id="createProductTitle">Create User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form class="m-3" id="productForm" method="post" action="/product/addProduct" enctype="multipart/form-data" >
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  class="form-control "
+                  name="name"
+                  id="name"
+                  placeholder="Enter your full name"
+                  required
+                />
+
+              </div>
+              <div class="form-group col-md-6">
+                <label for="price">Price</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="price"
+                  id="price"
+                  placeholder="enter price ex:- 12000"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="brandId">Brands</label>
+                <select
+                  id="brandId"
+                  name="brandId"
+                  class="form-control h-50"
+                  required
+                >
+                <% brands.forEach((brand)=>{ %>
+                  <option value="<%= brand.id %>" selected><%= brand.name %></option>
+                  <!-- <option value="2">oppo</option> -->
+                <% }); %>
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="categoryId">Categories</label>
+                <select
+                  id="categoryId"
+                  name="categoryId"
+                  class="form-control h-50"
+                  required
+                >
+                <% categories.forEach((category)=>{ %>
+                  <option value="<%= category.id %>" selected><%= category.name %></option>
+                  <!-- <option value="2">Laptops</option> -->
+                <% }); %>  
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="quantity">Quantity</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="quantity"
+                  id="quantity"
+                  placeholder="update quantity"
+                  required
+                />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="description">Description</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="description"
+                  id="description"
+                  placeholder="ram:12GB, rom:128GB"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-row" id="img">
+              <div class="form-group col-md-6">
+                <label for="featuredImage">Featured Image</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  name="featuredImage"
+                  id="featuredImage"
+                  required
+                />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="otherImages">Other Images</label>
+                <input
+                  type="file"
+                  multiple
+                  accept=".jpg, .jpeg, .png"
+                  class="form-control"
+                  name="otherImages"
+                  id="otherImages"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="tags">Tags</label>
+                <select class="selectpicker form-control h-50" multiple data-live-search="true" name="tags" id="tags">
+                  <% tags.forEach((tag)=>{ %>
+                  <option value="<%= tag.id %>"><%= tag.name %></option>
+                  <% }) %>
+
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="status">Status</label>
+                <select
+                  id="status"
+                  name="status"
+                  class="form-control h-50"
+                  required
+                >
+                  <option value="1" selected>Active</option>
+                  <option value="0">Inactive</option>
+                </select>
+              </div>
+            </div>
+            <div class="float-end">
+              <button
+                type="button"
+                class="btn btn-secondary close-button"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">
+                <b>Save Details</b>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- modal for Assign role to user -->
+  
+    <!-- scripts started here -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    
+ 
+
+
+
+    <script>
+      // Function to set user data in the form
+      function setProductData(product, tag) {
+        const form = document.getElementById("productForm");
+        const nameInput = form.querySelector("#name");
+        const priceInput = form.querySelector("#price");
+        const brandSelect = form.querySelector("#brandId");
+        const categorySelect = form.querySelector("#categoryId");
+        const quantityInput = form.querySelector("#quantity");
+        const descriptionInput = form.querySelector("#description");
+        const featuredImgInput = form.querySelector("#featuredImage");
+        const otherImgInput = form.querySelector("#otherImages");
+        const statusSelect = form.querySelector("#status");
+        const tagSelect = form.querySelector("#tags");
+        const title = document.getElementById("createProductTitle");
+        const hideImg = form.querySelector("#img");
+
+        //need to work with img part after Api is created
+
+        featuredImgInput.removeAttribute('required');
+        otherImgInput.removeAttribute('required');
+        hideImg.style.display= 'none';
+
+        ///
+
+
+        nameInput.value = product.name || "";
+        priceInput.value = product.product_prices[0].price || "";
+        brandSelect.value = product.brandId || "";
+        categorySelect.value = product.categoryId || "";
+        quantityInput.value = product.product_quantity.quantity || "";
+        statusSelect.value = product.status || "1";
+        descriptionInput.value = product.description || "";
+        title.innerText = "Update Product"
+
+        tagSelect.querySelectorAll('option').forEach(option => {
+        // Check if any object in products has a tagId equal to the option's value
+            if (product.Tags.some(tagObj => tagObj.id == option.value)) {
+             // If yes, mark the option as selected
+              option.selected = true;
+            }
+          });
+        }
+
+      // Event listener for edit buttons
+      document.querySelectorAll(".edit-button").forEach(function (button) {
+        button.addEventListener("click", function () {
+          // Get the user data from the data-user attribute
+          const productData = JSON.parse(this.getAttribute("data-product"));
+
+          console.log(productData);
+
+          setProductData(productData);
+
+          // Set the form action for editing
+          const form = document.getElementById("productForm");
+          form.action = `/product/update/${productData.id}?_method=PATCH`;
+
+          // Show the modal
+        });
+      });
+
+      //for setting assigned role
+
+      // document.querySelectorAll(".assign-role-button").forEach(async function (button){
+      //   button.addEventListener('click', async function(){
+      //     let userData = JSON.parse(this.getAttribute("data-user"));
+          
+      //       let response = await fetch(`/user/userSpecificRole/${userData.id}`);
+      //       let data = await response.json();
+
+      //       const roleSelect = document.getElementById("role");
+      //           roleSelect.value = data.roleId ? data.roleId : '#';
+
+      // // Update the value of the hidden input field
+      //        const assignRoleUserId = document.getElementById("assignRoleUserId");
+      //        assignRoleUserId.value = userData.id;
+            
+            
+        
+         
+      //     console.log(data.roleId);
+      //     const form = document.getElementById("assignRoleForm");
+          
+      //   })
+      // })
+
+    </script>
+
+    <script>
+      const deleteForms = document.querySelectorAll(".delete-form");
+      const deleteButtons = document.querySelectorAll(".delete-button");
+
+      deleteButtons.forEach((button, index) => {
+        button.addEventListener("click", () => {
+          Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Trigger the form submission for the corresponding delete form
+              swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+              setTimeout(() => {
+                deleteForms[index].submit();
+              }, 1000);
+            }
+          });
+        });
+      });
+    </script>
+
+   <!-- sweetalert2 with flash -->
+<%
+function showSwal(icon, title) {
+%>
+  <script>
+    Swal.fire({
+      position: "center",
+      icon: "<%= icon %>",
+      title: "<%= title %>",
+      showConfirmButton: false,
+      timer: 2500
+    });
+  </script>
+<%
+}
+%>
+
+<%
+switch (errorRes[0]) {
+  case 'true':
+    showSwal('success', 'New Product added successfully');
+    break;
+  case 'false':
+    showSwal('error', 'Error: unable to add new Product');
+    break;
+  case 'update':
+    showSwal('success', 'Product updated successfully');
+    break;
+  case 'notUpdate':
+    showSwal('error', 'Error: unable to update Product');
+    break;
+}
+%>
+
+
+
+    <script src="/js/app.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+
+
+  </body>
+</html>

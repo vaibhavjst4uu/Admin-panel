@@ -122,19 +122,19 @@ const Alldata = async (req, res) => {
 
 const savePermission = async (req, res) => {
   try {
-    const { role, permission } = req.body;
-
+    const { role, permissions } = req.body;
+    console.log(permissions);
     await role_has_permission.sync({ alter: true });
 
-    if (typeof permission === "string") {
+    if (typeof permissions === "string") {
       let RolePermission = await role_has_permission.findOrCreate({
         where: {
           roleId: role,
-          permissionId: parseInt(permission),
+          permissionId: parseInt(permissions),
         },
         defaults: {
           roleId: role,
-          permissionId: parseInt(permission),
+          permissionId: parseInt(permissions),
         },
       });
       // console.log(RolePermission);
@@ -148,7 +148,7 @@ const savePermission = async (req, res) => {
         },
       });
     } else {
-      permission.forEach((per) => {
+      permissions.forEach((per) => {
         let RolePermission = async (role, per) => {
           return await role_has_permission.findOrCreate({
             where: {
@@ -167,7 +167,7 @@ const savePermission = async (req, res) => {
         where: {
           roleId: role,
           permissionId: {
-            [Op.notIn]: permission,
+            [Op.notIn]: permissions,
           },
         },
       });

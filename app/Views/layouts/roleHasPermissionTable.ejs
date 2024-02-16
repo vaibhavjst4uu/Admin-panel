@@ -102,7 +102,7 @@
               <input
                 type="checkbox"
                 class="individualCheckbox"
-                name="permission"
+                name="permissions[]"
                 id="<%= permission.id %>"
                 value="<%= permission.id %>"
               />
@@ -116,7 +116,7 @@
         </div>
       </div>
       <button type="submit" class="btn btn-primary col-md-2">
-        update Permissions
+        Save Permissions
       </button>
     </form>
 
@@ -285,7 +285,7 @@ function showSwal(icon, title) {
 %>
   <script>
     Swal.fire({
-      position: "top-end",
+      position: "center",
       icon: "<%= icon %>",
       title: "<%= title %>",
       showConfirmButton: false,
