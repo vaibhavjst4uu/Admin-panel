@@ -12,7 +12,7 @@ let User_has_role = db.user_has_role;
 
 const addUser = async (req, res) => {
   const { status, ...reqBody } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   try {
     
     let user = await Users.create(reqBody);
@@ -24,6 +24,7 @@ const addUser = async (req, res) => {
 
     
   } catch (e) {
+    console.error(e);
     req.flash('error', 'false');
     res.redirect("/user/data");
   }
@@ -158,9 +159,16 @@ const signIn = async(req,res)=>{
     return;
   }
   // res.json(Data.user_has_role[0]);
-  if(Data[0].Roles[0].name == "Admin"){
-    req.session.userId = Data[0].id;
-    req.session.name = Data[0].name;
+  // console.log(Data[0].Roles[0].name);
+
+  if(Data && Data.length > 0 && Data[0].Roles && Data[0].Roles.length > 0 && Data[0].Roles[0].name){
+  }else{
+    res.json({error:`Sorry ${Data[0].name} only admin can login on this portal`});
+    return;
+  }
+ if(Data[0].Roles[0].name == "Admin"){
+   req.session.userId = await Data[0].id;
+    req.session.name = await Data[0].name;
     req.session.isAdmin = true;
     // console.log(req.session);
     res.redirect("/index");

@@ -22,12 +22,16 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       // One-to-Many with Product_has_tags
-      this.hasMany(models.product_has_tags, { as: "productTags", foreignKey: "productId" });
+      this.hasMany(models.product_has_tags, {
+        as: "productTags",
+        foreignKey: "productId",
+      });
 
       // Many-to-Many with Tags through product_has_tags
       this.belongsToMany(models.Tags, {
         through: models.product_has_tags,
-        // foreignKey: 'productId',
+        // foreignKey: "productId",
+        // otherKey: "tagId",
         // as:"productTags"
       });
     }

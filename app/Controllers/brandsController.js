@@ -6,7 +6,8 @@ let brands = db.Brands;
 
 const addBrand = async (req,res)=>{
     const {...reqBody} = req.body;
-    console.log(req.body);
+    reqBody.createdBy = req.session.userId;
+    console.log(reqBody);
 
     try {
         if(reqBody.name !== ''){

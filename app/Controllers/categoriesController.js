@@ -6,7 +6,9 @@ let categories = db.Categories;
 
 const addCategory = async (req,res)=>{
     const {...reqBody} = req.body;
-    console.log(req.body);
+    // console.log(req.body);
+
+    reqBody.createdBy = req.session.userId;
 
     try {
         if(reqBody.name !== ''){

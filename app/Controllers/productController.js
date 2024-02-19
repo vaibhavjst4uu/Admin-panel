@@ -7,8 +7,7 @@ let Brands = db.Brands;
 let Tags = db.Tags;
 let Media = db.media;
 
-let createdBy = 1;
-let uploadedBy = 1;
+
 //my code
 // const addProduct = async (req, res) => {
 // try {
@@ -95,10 +94,10 @@ const addProduct = async (req, res) => {
     const otherImages = [];
     for (const imageFile of req.files.otherImages) {
       const result = await FileUpload(imageFile, "app/uploads/otherImages/");
-      result.uploadedBy = uploadedBy;
+      result.uploadedBy = req.session.userId;
       otherImages.push(result);
     }
-    featuredImage.uploadedBy = uploadedBy;
+    featuredImage.uploadedBy = req.session.userId;
     // console.log(otherImages);
 
     DeleteImg.push(featuredImage);
@@ -117,7 +116,7 @@ const addProduct = async (req, res) => {
         {
           name: name,
           description: description,
-          createdBy: createdBy,
+          createdBy: req.session.UserId,
           status: status,
           brandId: brandId,
           categoryId: categoryId,
@@ -132,12 +131,12 @@ const addProduct = async (req, res) => {
           ],
           product_quantity: {
             quantity: quantity,
-            createdBy: createdBy,
+            createdBy: req.session.userId,
           },
           product_prices: [
             {
               price: price,
-              createdBy: createdBy,
+              createdBy: req.session.userId,
             },
           ],
           productTags: tags.map((tag) => ({ tagId: tag })),
@@ -164,7 +163,7 @@ const addProduct = async (req, res) => {
     for (let img of DeleteImg) {
       await DeleteFile(img.filepath);
     }
-
+    console.error(error);
     req.flash("error", "false");
     res.redirect("/product/data");
   }
@@ -262,6 +261,7 @@ const updateProduct = async (req, res) => {
       existingProduct.status = status;
       existingProduct.brandId = brandId;
       existingProduct.categoryId = categoryId;
+      existingProduct.updatedBy = req.session.userId;
 
       // Save the changes
       await existingProduct.save({ transaction: t });

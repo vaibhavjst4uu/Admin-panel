@@ -6,7 +6,7 @@ let tags = db.Tags;
 
 const addTag = async (req,res)=>{
     const {...reqBody} = req.body;
-
+  reqBody.createdBy = req.session.userId;
 
     try {
         if(reqBody.name !== ''){
