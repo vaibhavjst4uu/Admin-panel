@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 // Require controller modules.
 const productCtrl = require("../controllers/productController");
+const authCtrl = require("../controllers/authController");
+const { validateLogin } = require("../middlewares/validateLogin")
 
 
 router.get("/products",(req,res,next)=>{
@@ -11,6 +13,10 @@ router.get("/products",(req,res,next)=>{
 
 router.post("/search_products", productCtrl.searchProducts);
 router.post("/product_details/:id", productCtrl.detailedProductInformation);
+
+router.post("/login",validateLogin, authCtrl.login );
+router.post("/signUp", authCtrl.signup);
+router.patch("/reset_password/:id", authCtrl.resetPassword);
 
 
 

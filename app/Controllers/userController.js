@@ -11,7 +11,7 @@ let Roles = db.Roles;
 let User_has_role = db.user_has_role;
 
 const addUser = async (req, res) => {
-  const { status, ...reqBody } = req.body;
+  const {  ...reqBody } = req.body;
   // console.log(req.body);
   try {
     

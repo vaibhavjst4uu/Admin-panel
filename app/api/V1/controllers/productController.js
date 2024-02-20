@@ -45,7 +45,7 @@ const getProducts = async (req, res) => {
     //       ],
     //     }));
     // }
-    console.log(whereConditions);
+    // console.log(whereConditions);
 
     const includeClause = tag_id
     ? [
@@ -143,10 +143,10 @@ try {
         attributes:['name']
     });
   
-    res.json({product:product, brand:brand, category:category});
+    res.json({status:"success", responseCode:200, product:product, brand:brand, category:category});
 } catch (error) {
     console.error(error);
-    res.json(error);
+    res.json({status:failed, responseCode:401, error: error});
 }
 }  
   
