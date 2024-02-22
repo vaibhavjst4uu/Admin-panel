@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         notEmpty:{msg: "Password cannot be empty"},
-    },       
+      },       
     },
     mobile:{
       type: DataTypes.STRING,
