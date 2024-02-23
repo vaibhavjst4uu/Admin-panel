@@ -106,7 +106,14 @@ module.exports = (sequelize, DataTypes) => {
       //   // Custom getter for createdAt
       //   return this.createdAtValue;
       // },
+    },
+    gender:{
+      type:DataTypes.ENUM('male','female', 'other'),
+    },
+    user_imgId:{
+      type:DataTypes.INTEGER
     }
+
 
   }, {
     sequelize,
