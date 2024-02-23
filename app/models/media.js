@@ -38,5 +38,6 @@ module.exports = (sequelize, DataTypes) => {
     timestamps:false,
     modelName: 'media',
   });
+  media.removeAttribute("createdBy");
   return media;
 };

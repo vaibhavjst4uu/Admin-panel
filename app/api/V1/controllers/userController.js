@@ -1,6 +1,7 @@
 const db = require("../../../models/index");
 const { Op } = require("sequelize");
 const { FileUpload, DeleteFile } = require("../../../middlewares/uploadFiles");
+const validator = require("../middlewares/validateCredentials");
 
 
 
@@ -127,12 +128,136 @@ const addUser = async (req, res) => {
     }
   };  
 
+  const userDetails = async(req,res)=>{
+    try {
+      const id= Number(req.params.id);
+
+      let userDetails = await Users.findOne({
+        where:{
+          id:id
+        },
+      });
+      let profilePicture = await Media.findOne({
+        where:{
+          id: userDetails.user_imgId
+        }
+      });
+      userDetails.dataValues.profilePicture = profilePicture;
+
+
+      res.json({
+        statusCode:200,
+        responseCode: "OK",
+        message: "User Details Found Successfully.",
+        data: userDetails
+      });
+
+    } catch (error) {
+      console.error(error);
+      res.json(error);
+    }
+  }
+
+  const deleteUser = async(req,res)=>{
+    const id = Number(req.params.id);
+
+    try {
+      await Users.destroy({
+        where: {
+          id: id,
+        },
+      });
+      res.status(200).json({
+        status:"success",
+        responseCode:200,
+        message: `The User with the id ${id} has been deleted.`
+      })
+    } catch (error) {
+      res.status(400).json({
+        status: 'fail',
+        responseCode:400,
+        message: error.message
+      });
+    }
+
+  }
+
   
 
 
 const addNewAddress = async(req,res)=>{
+  const id = Number(req.params.id);
+  const newAddr = req.body;
+  newAddr.userId = id;
+
+  try {
+    const{isDefault} = req.body;
+    const result = await db.sequelize.transaction(async(t)=>{
+    if(isDefault && isDefault === "true"){
+      const data = await db.user_addresses.update({ isDefault: false }, {
+        where: {
+          userId: id,
+          isDefault: true // Only update addresses that are currently set as default
+        },
+        transaction:t
+      });
+ 
+    }
+  
+    const newAddress = await db.user_addresses.create(newAddr,{transaction:t});
+    res.json(newAddress);
+
+    return newAddress;
+  });
+
+  } catch (error) {
+    res.status(400).json(validator.validateAddress(error));
+  }
 
 }
+
+const userSpecificAddr = async(req,res)=>{
+    const id = Number(req.params.id);
+    try {
+      const userAddress = await db.user_addresses.findAll({where:{userId:id}});
+      res.json(userAddress);
+    } catch (error) {
+      res.json({
+        status:"fail",
+        responseCode:400,
+        message:"Error getting address"
+      });
+    }    
+}
+
+
+const removeAddress = async(req,res)=>{
+  const id = Number(req.params.id);
+  
+  try {
+    await db.user_addresses.destroy({
+      where:{
+        id:id
+      }
+    });
+    res.status(200).json({
+      status:"success",
+      responseCode:200,
+      message: "Deleted Address Successfully!"
+    })
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      status: 'failed',
+      responseCode: 400,
+      message:'Failed to delete the address'
+    });
+  }
+
+}
+
+
+
   module.exports = {
-    addUser,updateUser
+    addUser,updateUser, userDetails, addNewAddress,  userSpecificAddr, deleteUser,removeAddress
   }

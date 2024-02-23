@@ -11,6 +11,7 @@ module.exports = {
     await queryInterface.addColumn('Users', 'user_imgId', {
       type: Sequelize.INTEGER,
       allowNull: true,
+      references: { model: 'media', key: 'id' },
     });
   },
 

@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   user_addresses.init({
+    userId:{
+      type:DataTypes.INTEGER,
+      allowNull:false
+    },
     fullname:{
       type: DataTypes.STRING,
       allowNull:false,
@@ -87,7 +91,24 @@ module.exports = (sequelize, DataTypes) => {
     },
     address_type:{
       type:DataTypes.ENUM('Home','Office'),
-      defaultValue: 'Home'
+      defaultValue: 'Home',
+      validate:{
+        isIn: {
+            args: [['Home', 'Office']],
+            msg: "Must be either 'Home' or 'Office'"
+        },
+      }
+    },
+    isDefault:{
+      type:DataTypes.BOOLEAN,
+      defaultValue: false,
+      validate:{
+        isIn: {
+            args: [[true, false]],
+            msg: "Must be either true or false"
+        },
+      }
+
     }
   }, {
     sequelize,

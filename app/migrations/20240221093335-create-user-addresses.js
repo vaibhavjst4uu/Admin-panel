@@ -9,6 +9,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        references: { model: "users", key: "id" },
+        onDelete:'CASCADE',
+        onUpdate:'CASCADE'
+      },
       fullname: {
         type: Sequelize.STRING,
         allowNull:false,
@@ -48,6 +54,10 @@ module.exports = {
       address_type: {
         type: Sequelize.ENUM( 'Home', 'Office' ),
         defaultValue:'Home'
+      },
+      isDefault:{
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,
