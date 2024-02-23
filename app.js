@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-require('dotenv').config();
+require("dotenv").config();
 port = process.env.PORT || 5000;
 const fileUpload = require("express-fileupload");
 const path = require("path");
