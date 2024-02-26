@@ -5,7 +5,6 @@ const productCtrl = require("../controllers/productController");
 const authCtrl = require("../controllers/authController");
 const processCtrl = require("../controllers/processController");
 const userCtrl = require("../controllers/userController");
-
 const { validateLogin } = require("../middlewares/validateLogin");
 
 router.get(
