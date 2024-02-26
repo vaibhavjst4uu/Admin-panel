@@ -12,13 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // this.hasOne(
-      //   models.user_has_role,
-      //   {
-      //     foreignKey: "userId",
-      //     onDelete:"CASCADE"
-      //   }
-      // );
+      // this.hasOne(models.media, { foreignKey: "id" });
 
       this.belongsToMany(models.Roles, {
         through: models.user_has_role,
@@ -67,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         notEmpty:{msg: "Password cannot be empty"},
-    },       
+      },       
     },
     mobile:{
       type: DataTypes.STRING,
@@ -106,7 +100,14 @@ module.exports = (sequelize, DataTypes) => {
       //   // Custom getter for createdAt
       //   return this.createdAtValue;
       // },
+    },
+    gender:{
+      type:DataTypes.ENUM('male','female', 'other'),
+    },
+    user_imgId:{
+      type:DataTypes.INTEGER
     }
+
 
   }, {
     sequelize,
